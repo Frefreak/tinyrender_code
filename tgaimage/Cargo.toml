@@ -1,0 +1,12 @@
+[package]
+name = "tgaimage"
+version = "0.1.0"
+authors = ["Frefreak <frefreak.zxy@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+bincode = "1.3.3"
+chrono = "0.4.19"
+serde = { version = "1.0.128", features = ["derive"] }
