@@ -29,8 +29,8 @@ pub struct TGAImage {
     data: TGAData,
     #[serde(skip)]
     width: u16,
-    // #[serde(skip)]
-    // height: u16,
+    #[serde(skip)]
+    height: u16,
 }
 
 pub const BLACK: TGAColor = (0, 0, 0);
@@ -64,7 +64,7 @@ impl TGAImage {
             header,
             data,
             width,
-            // height,
+            height,
         }
     }
 
@@ -77,7 +77,19 @@ impl TGAImage {
     }
 
     pub fn set(&mut self, x: u16, y: u16, color: TGAColor) {
-        self.data.data[(y as u64 * self.width  as u64 + x as u64) as usize] = color;
+        self.data.data[(y as u64 * self.width as u64 + x as u64) as usize] = color;
+    }
+    pub fn get(&self, x: u16, y: u16) -> TGAColor {
+        self.data.data[(y as u64 * self.width as u64 + x as u64) as usize]
+    }
+    pub fn flip_vertically(&mut self) {
+        for i in 0..self.height {
+            for j in 0..self.width/2 {
+                self.data.data.swap((
+                    i as u64 * self.width as u64 + j as u64) as usize,
+                    (i as u64 * self.width as u64 + (self.width - 1 - j) as u64) as usize);
+            }
+        }
     }
 }
 
@@ -98,6 +110,6 @@ mod tests {
         let mut f = std::fs::File::create("test.tga").unwrap();
         f.write_all(&bs).unwrap();
         assert!(Path::exists(Path::new("test.tga")));
-        // std::fs::remove_file("test.tga").unwrap();
+        std::fs::remove_file("test.tga").unwrap();
     }
 }
