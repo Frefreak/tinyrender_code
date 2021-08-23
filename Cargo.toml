@@ -9,10 +9,10 @@ edition = "2018"
 [dependencies]
 tgaimage = { path = "tgaimage" }
 draw = { path = "draw" }
+wavefront = "0.2.2"
 
 [workspace]
 members = ["tgaimage", "draw"]
 
 [profile.release]
 debug = 1
-
