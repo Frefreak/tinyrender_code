@@ -21,7 +21,7 @@ struct TGAData {
 
 }
 
-type TGAColor = (u8, u8, u8);
+pub type TGAColor = (u8, u8, u8);
 
 #[derive(Serialize)]
 pub struct TGAImage {
