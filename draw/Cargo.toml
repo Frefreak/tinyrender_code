@@ -11,6 +11,7 @@ tgaimage = { path = "../tgaimage" }
 
 [dev-dependencies]
 criterion = "0.3"
+tgaimage = { path = "../tgaimage" }
 
 [[bench]]
 name = "benchmark"

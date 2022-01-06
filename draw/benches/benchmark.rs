@@ -1,8 +1,9 @@
 use draw::{line1, line2};
-use tgaimage::{TGAImage, WHITE, RED};
+use draw::triangle1;
+use tgaimage::{TGAImage, WHITE, RED, GREEN};
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
-fn criterion_benchmark(c: &mut Criterion) {
+fn criterion_benchmark_line(c: &mut Criterion) {
     let mut image = TGAImage::new(100, 100);
 
     c.bench_function("line1", |b| b.iter(|| {
@@ -20,5 +21,18 @@ fn criterion_benchmark(c: &mut Criterion) {
     ));
 }
 
-criterion_group!(benches, criterion_benchmark);
-criterion_main!(benches);
+fn criterion_benchmark_triangle(c: &mut Criterion) {
+    let mut image = TGAImage::new(200, 200);
+    let t0 = vec![(10, 70), (50, 160), (70, 80)];
+    let t1 = vec![(180, 50), (150, 1), (70, 180)];
+    let t2 = vec![(180, 150), (120, 160), (130, 180)];
+    c.bench_function("triangle1", |b| b.iter(|| {
+        triangle1(black_box(t0[0]), black_box(t0[1]), black_box(t0[2]), &mut image, RED);
+        triangle1(black_box(t1[0]), black_box(t1[1]), black_box(t1[2]), &mut image, WHITE);
+        triangle1(black_box(t2[0]), black_box(t2[1]), black_box(t2[2]), &mut image, GREEN);
+    }));
+}
+
+criterion_group!(benches_line, criterion_benchmark_line);
+criterion_group!(benches_triangle, criterion_benchmark_triangle);
+criterion_main!(benches_line, benches_triangle);
